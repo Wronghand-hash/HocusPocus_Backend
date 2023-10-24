@@ -30,7 +30,7 @@ async function bootstrap() {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.enableCors({
-    origin: 'https://hocuspocusmagicstore.com',
+    origin: process.env.ORIGIN,
     methods: 'GET, PUT, POST, DELETE , OPTIONS',
     allowedHeaders: '*',
     preflightContinue: false,
@@ -46,7 +46,7 @@ async function bootstrap() {
   app.set('trust proxy', 1);
   app.use(
     session({
-      secret: 'keyworkds',
+      secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
 
@@ -55,7 +55,7 @@ async function bootstrap() {
         httpOnly: true,
         maxAge: 60000 * 5 * 2 * 3,
         sameSite: 'none',
-        domain: 'auth.hocuspocusmagicstore.com',
+        domain: process.env.DOMAIN,
       },
     }),
   );
