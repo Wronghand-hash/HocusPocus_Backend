@@ -6,40 +6,61 @@ import * as session from 'express-session';
 import * as passport from 'passport';
 import { default as Redis } from 'ioredis';
 import * as connectRedis from 'connect-redis';
-import * as cookieParser from 'cookie-parser';
-import { createClient } from 'redis';
+import * as bodyParser from 'body-parser';
 
-// const redisClient = createClient();
+import * as cookieParser from 'cookie-parser';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import * as multer from 'multer';
+// import { createClient } from 'redis';
+
+// const redisClient = createClient({
+//   legacyMode: true,
+// });
+// redisClient.connect().catch(console.error);
 
 // const RedisStore = connectRedis(session);
 // const redisClient = new Redis();
-// redisClient.connect().catch(console.error);
+
+multer({ dest: 'uploads/' });
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    bodyParser: false,
+  });
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: 'https://hocuspocusmagicstore.com',
     methods: 'GET, PUT, POST, DELETE , OPTIONS',
     allowedHeaders: '*',
     preflightContinue: false,
     credentials: true,
   });
+  app.use(
+    bodyParser.urlencoded({
+      extended: true,
+    }),
+  );
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
+  app.set('trust proxy', 1);
   app.use(
     session({
-      secret: 'keyboard',
+      secret: 'keyworkds',
       resave: false,
       saveUninitialized: false,
+
       cookie: {
-        secure: false,
-        httpOnly: false,
-        maxAge: 60000,
+        secure: true,
+        httpOnly: true,
+        maxAge: 60000 * 5 * 2 * 3,
+        sameSite: 'none',
+        domain: 'auth.hocuspocusmagicstore.com',
       },
     }),
   );
   app.use(passport.initialize());
   app.use(passport.session());
-  await app.listen(3333);
+  await app.listen(3000);
 }
 bootstrap();
