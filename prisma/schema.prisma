@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  email       String
+  username    String     @unique
+  password    String?
+  address     String?
+  city        String?
+  region      String?
+  postalCode  String?
+  fullname    String?
+  phonenumber String?
+  role        UserTypes  @default(NORMAL)
+  orders      Orders[]
+  comments    Comments[]
+}
+
+enum UserTypes {
+  NORMAL
+  ADMIN
+}
+
+model Products {
+  id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @default(now())
+  title         String
+  price         Float
+  special_offer Boolean?        @default(false)
+  description   String?
+  brand         String?
+  type          String?
+  category      String?
+  design        String?
+  inStock       Boolean?        @default(true)
+  ProductImages ProductImages[]
+  Comments      Comments[]
+}
+
+model Courses {
+  id            Int             @id @default(autoincrement())
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  file          Bytes
+  preview       Bytes?
+  title         String?
+  trainer       String?
+  price         String?
+  description   String?
+  CoursesImages CoursesImages[]
+}
+
+model CoursesImages {
+  id         Int      @id @default(autoincrement())
+  create_at  DateTime @default(now())
+  updated_at DateTime @updatedAt
+  buffer     String?
+  filename   String?
+  course_id  Int
+  course     Courses  @relation(fields: [course_id], references: [id])
+}
+
+model ProductImages {
+  id         Int      @id @default(autoincrement())
+  filename   String
+  buffer     String
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+  product_id Int
+  product    Products @relation(fields: [product_id], references: [id])
+}
+
+model Categories {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+  title      String
+}
+
+enum Rarities {
+  Common
+  Rare
+  VeryRare
+  Limited
+}
+
+model Orders {
+  id                    Int          @id @default(autoincrement())
+  created_at            DateTime     @default(now())
+  updated_at            DateTime     @updatedAt
+  status                String?      @default("PROCESSING")
+  totalPrice            String?
+  estimatedDeliveryDays String?
+  adderss               String?
+  phone_number          String?
+  city                  String?
+  fullname              String?
+  region                String?
+  postal_code           String?
+  user_id               Int
+  user                  User         @relation(fields: [user_id], references: [id])
+  orderItems            orderItems[]
+}
+
+model Membership {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model orderItems {
+  id       Int    @id @default(autoincrement())
+  order_id Int
+  items    Json?
+  order    Orders @relation(fields: [order_id], references: [id])
+}
+
+model Comments {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  comment    String
+  user_id    Int
+  product_id Int
+  product    Products @relation(fields: [product_id], references: [id])
+  user       User     @relation(fields: [user_id], references: [id])
+}
