@@ -10,6 +10,16 @@ export class ProductsController {
     return this.productService.getAllProducts();
   }
 
+  @Get('latest')
+  getLatest() {
+    return this.productService.getLatestProduct();
+  }
+
+  @Get('lastfour')
+  getLastFour() {
+    return this.productService.getFourBeforeOne();
+  }
+
   @Get(':id')
   getProductsById(@Param('id') id: string) {
     return this.productService.getProductById(id);

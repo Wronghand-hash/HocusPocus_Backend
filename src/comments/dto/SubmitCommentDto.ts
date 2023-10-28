@@ -6,4 +6,6 @@ export class SubmitCommentDto {
   userId: string;
 
   comment: string;
+
+  username: string;
 }

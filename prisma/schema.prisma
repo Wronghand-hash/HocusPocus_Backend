@@ -130,6 +130,7 @@ model Comments {
   id         Int      @id @default(autoincrement())
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  username   String?
   comment    String
   user_id    Int
   product_id Int

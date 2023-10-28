@@ -1,5 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Injectable, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  ForbiddenException,
+  NotAcceptableException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AuthDto } from './dto';
 import * as argon from 'argon2';
@@ -28,6 +32,35 @@ export class AuthService {
       };
     }
     return null;
+  }
+
+  async isAuthenticated(username: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        username: username,
+      },
+    });
+    if (!user) {
+      throw new NotAcceptableException('نام کاربری پیدا نشد');
+    }
+    return {
+      userId: user.id,
+    };
+  }
+
+  async getUser(username: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        username: username,
+      },
+    });
+    if (!user) {
+      throw new NotAcceptableException('نام کاربری پیدا نشد');
+    }
+    return {
+      userId: user.id,
+      username: user.username,
+    };
   }
 
   // async getTokens(userId: number, email: string): Promise<Tokens> {

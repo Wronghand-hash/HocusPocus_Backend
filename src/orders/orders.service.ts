@@ -19,7 +19,7 @@ export class OrdersService {
         fullname: dto.fullname,
         postal_code: dto.postal_code,
         phone_number: dto.phone_number,
-        user_id: Number(dto.user_id),
+        user_id: Number(dto.userId),
       },
     });
 
@@ -29,7 +29,7 @@ export class OrdersService {
   async getUserOrder(dto: UserOrder) {
     const orders = await this.prismaService.orders.findMany({
       where: {
-        user_id: 2,
+        user_id: Number(dto.userId),
       },
     });
 

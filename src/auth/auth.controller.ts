@@ -7,6 +7,7 @@ import {
   UseGuards,
   Res,
   Get,
+  Session,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
@@ -18,6 +19,7 @@ import { LocalAuthGuard } from './common/guards/local.guard';
 import { Response } from 'express';
 import { RolesGuard } from './common/guards/roleBased.guard';
 import { Roles } from './common/decorators/Role.decorator';
+import { AuthenticatedGuard } from './authGuards/authenticated.guards';
 
 @Controller('auth')
 export class AuthController {
@@ -35,6 +37,18 @@ export class AuthController {
     return {
       msg: 'User logged in',
     };
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('/isauthenticated')
+  getProfile(@Session() session: Record<string, any>) {
+    return this.authService.isAuthenticated(session.passport.user.username);
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('/isauth')
+  getUser(@Session() session: Record<string, any>) {
+    return this.authService.getUser(session.passport.user.username);
   }
 
   // @UseGuards(AtGuard)

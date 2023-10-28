@@ -16,5 +16,5 @@ export class OrdersDto {
 
   postal_code: string;
 
-  user_id: string;
+  userId: string;
 }

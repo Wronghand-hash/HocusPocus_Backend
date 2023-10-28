@@ -20,6 +20,50 @@ export class ProductsService {
     return { products: products };
   }
 
+  async getLatestProduct() {
+    const product = await this.prismaService.products.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 1,
+      select: {
+        createdAt: true,
+        id: true,
+        title: true,
+        price: true,
+        brand: true,
+        type: true,
+        design: true,
+        category: true,
+        description: true,
+      },
+    });
+
+    return { product: product };
+  }
+
+  async getFourBeforeOne() {
+    const products = await this.prismaService.products.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      skip: 1,
+      take: 4,
+      select: {
+        createdAt: true,
+        id: true,
+        title: true,
+        price: true,
+        brand: true,
+        type: true,
+        design: true,
+        category: true,
+        description: true,
+      },
+    });
+    return { products: products };
+  }
+
   async getProductById(id: string) {
     const product = await this.prismaService.products.findUnique({
       where: {

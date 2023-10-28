@@ -23,6 +23,7 @@ export class CommentsService {
         product_id: Number(id),
         user_id: Number(dto.userId),
         comment: dto.comment,
+        username: dto.username,
       },
     });
   }
