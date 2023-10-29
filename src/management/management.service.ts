@@ -150,7 +150,18 @@ export class ManagementService {
   // video services functions
 
   async getAllCourses() {
-    const courses = await this.prismaService.courses.findMany({});
+    const courses = await this.prismaService.courses.findMany({
+      select: {
+        id: true,
+        created_at: true,
+        title: true,
+        preview: true,
+        price: true,
+        description: true,
+        trainer: true,
+        CoursesImages: true,
+      },
+    });
     return { courses: courses };
   }
 
@@ -179,5 +190,24 @@ export class ManagementService {
     });
 
     return { data: 'عکس اضافه شد' };
+  }
+
+  async removeCourseImage(id: string) {
+    const image = await this.prismaService.coursesImages.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+    return { msg: 'image remove' };
+  }
+
+  async removeCourse(id: string) {
+    const course = await this.prismaService.courses.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    return { msg: 'محصول حذف شد' };
   }
 }

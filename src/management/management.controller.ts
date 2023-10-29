@@ -154,6 +154,16 @@ export class ManagementController {
     return this.managementService.storeCourseImage(file, body);
   }
 
+  @Post('/removecourseimage/:id')
+  removeCourseImage(@Param('id') id: string) {
+    return this.managementService.removeCourseImage(id);
+  }
+
+  @Post('/removecourse/:id')
+  removeCourse(@Param('id') id: string) {
+    return this.managementService.removeCourse(id);
+  }
+
   // category requests
 
   @Post('/addcategory')
