@@ -175,4 +175,11 @@ export class ManagementController {
   getCategories() {
     return this.managementService.getCategories();
   }
+
+  // comment requests
+
+  @Post('/removecomment/:id')
+  removeComment(@Param('id') id: string) {
+    return this.managementService.removeComment(id);
+  }
 }

@@ -33,7 +33,21 @@ export class ManagementService {
   }
 
   async getProducts() {
-    const products = await this.prismaService.products.findMany({});
+    const products = await this.prismaService.products.findMany({
+      select: {
+        id: true,
+        title: true,
+        createdAt: true,
+        price: true,
+        category: true,
+        brand: true,
+        description: true,
+        design: true,
+        inStock: true,
+        Comments: true,
+        ProductImages: true,
+      },
+    });
     return { products: products };
   }
 
@@ -209,5 +223,13 @@ export class ManagementService {
     });
 
     return { msg: 'محصول حذف شد' };
+  }
+
+  // Comments management
+
+  async removeComment(id: string) {
+    const comment = await this.prismaService.comments.delete({
+      where: { id: Number(id) },
+    });
   }
 }
