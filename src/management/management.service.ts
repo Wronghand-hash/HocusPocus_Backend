@@ -34,6 +34,7 @@ export class ManagementService {
 
   async getProducts() {
     const products = await this.prismaService.products.findMany({
+      orderBy: { id: 'asc' },
       select: {
         id: true,
         title: true,
@@ -45,7 +46,12 @@ export class ManagementService {
         design: true,
         inStock: true,
         Comments: true,
-        ProductImages: true,
+        ProductImages: {
+          select: {
+            id: true,
+            product_id: true,
+          },
+        },
       },
     });
     return { products: products };
