@@ -15,4 +15,9 @@ export class CommentsController {
   submitProductComment(@Param('id') id: string, @Body() dto: SubmitCommentDto) {
     return this.commentService.submitComment(id, dto);
   }
+
+  @Post('/video/:id')
+  submitVideoComment(@Param('id') id: string, @Body() dto: SubmitCommentDto) {
+    return this.commentService.submitVideoComment(id, dto);
+  }
 }

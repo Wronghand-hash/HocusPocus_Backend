@@ -27,4 +27,16 @@ export class CommentsService {
       },
     });
   }
+
+  async submitVideoComment(id: string, dto: SubmitCommentDto) {
+    console.log(dto);
+    const comment = await this.prismaService.comments.create({
+      data: {
+        product_id: Number(id),
+        user_id: Number(dto.userId),
+        comment: dto.comment,
+        username: dto.username,
+      },
+    });
+  }
 }

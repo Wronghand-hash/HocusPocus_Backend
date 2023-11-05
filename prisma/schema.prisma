@@ -11,20 +11,21 @@ datasource db {
 }
 
 model User {
-  id          Int        @id @default(autoincrement())
-  createdAt   DateTime   @default(now())
-  email       String
-  username    String     @unique
-  password    String?
-  address     String?
-  city        String?
-  region      String?
-  postalCode  String?
-  fullname    String?
-  phonenumber String?
-  role        UserTypes  @default(NORMAL)
-  orders      Orders[]
-  comments    Comments[]
+  id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @default(now())
+  email         String
+  username      String          @unique
+  password      String?
+  address       String?
+  city          String?
+  region        String?
+  postalCode    String?
+  fullname      String?
+  phonenumber   String?
+  role          UserTypes       @default(NORMAL)
+  orders        Orders[]
+  comments      Comments[]
+  VideoComments VideoComments[]
 }
 
 enum UserTypes {
@@ -59,6 +60,7 @@ model Courses {
   price         String?
   description   String?
   CoursesImages CoursesImages[]
+  VideoComments VideoComments[]
 }
 
 model CoursesImages {
@@ -135,5 +137,17 @@ model Comments {
   user_id    Int
   product_id Int
   product    Products @relation(fields: [product_id], references: [id])
+  user       User     @relation(fields: [user_id], references: [id])
+}
+
+model VideoComments {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  username   String?
+  comment    String
+  user_id    Int
+  course_id  Int
+  course     Courses  @relation(fields: [course_id], references: [id])
   user       User     @relation(fields: [user_id], references: [id])
 }
