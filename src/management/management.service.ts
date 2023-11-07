@@ -99,6 +99,18 @@ export class ManagementService {
     return { product: product };
   }
 
+  async enableMode() {
+    const product = await this.prismaService.products.updateMany({
+      where: {
+        type: 'کارت ها',
+      },
+      data: {
+        mode: true,
+      },
+    });
+    return { product: product };
+  }
+
   async removeProductImage(id: string) {
     const image = await this.prismaService.productImages.delete({
       where: {

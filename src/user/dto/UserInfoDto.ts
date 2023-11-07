@@ -7,7 +7,7 @@ export class UserInfoDto {
 
   fullname: string;
 
-  phoneNumber: string;
+  phonenumber: string;
 
   address: string;
 

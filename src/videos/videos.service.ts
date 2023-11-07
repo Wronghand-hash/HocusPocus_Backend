@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { SubmitOrderDto } from './dto/SubmitOrderDto';
+import { MembershipItem } from './dto/MembershipItem';
 
 @Injectable()
 export class VideosService {
@@ -92,5 +94,29 @@ export class VideosService {
 
     const imageDataURL = `data:image/jpeg;base64,${image.buffer}`;
     return { image: imageDataURL };
+  }
+
+  async submitOrder(dto: SubmitOrderDto) {
+    const order = await this.prismaService.membership.create({
+      data: {
+        totalPrice: dto.totalPrice,
+        fullname: dto.fullname,
+        user_id: Number(dto.userId),
+      },
+    });
+
+    return { order: order };
+  }
+
+  async submitItems(dto: MembershipItem) {
+    console.log(JSON.stringify(dto.items));
+    const orderItems = await this.prismaService.membershipItem.create({
+      data: {
+        items: dto.items,
+        membership_id: Number(dto.membership_id),
+      },
+    });
+
+    return { orderItem: orderItems };
   }
 }

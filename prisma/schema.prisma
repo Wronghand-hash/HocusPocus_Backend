@@ -26,6 +26,7 @@ model User {
   orders        Orders[]
   comments      Comments[]
   VideoComments VideoComments[]
+  Membership    Membership[]
 }
 
 enum UserTypes {
@@ -44,6 +45,7 @@ model Products {
   type          String?
   category      String?
   design        String?
+  mode          Boolean         @default(false)
   inStock       Boolean?        @default(true)
   ProductImages ProductImages[]
   Comments      Comments[]
@@ -116,9 +118,23 @@ model Orders {
 }
 
 model Membership {
-  id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id             Int              @id @default(autoincrement())
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+  fullname       String?
+  phonenumber    String?
+  email          String?
+  totalPrice     String?
+  user_id        Int
+  user           User             @relation(fields: [user_id], references: [id])
+  MembershipItem MembershipItem[]
+}
+
+model MembershipItem {
+  id            Int        @id @default(autoincrement())
+  items         Json?
+  membership_id Int
+  membership    Membership @relation(fields: [membership_id], references: [id])
 }
 
 model orderItems {

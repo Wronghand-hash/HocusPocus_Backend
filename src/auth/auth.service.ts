@@ -10,6 +10,7 @@ import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { Tokens } from './types';
 import { JwtService } from '@nestjs/jwt';
+import { RecoveryDto } from './dto/RecoveryDto';
 @Injectable({})
 export class AuthService {
   constructor(private prisma: PrismaService) {}
@@ -114,6 +115,29 @@ export class AuthService {
         throw error;
       }
     }
+    // save the user into the dataabase
+  }
+
+  async resetPass(dto: RecoveryDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        username: dto.username,
+      },
+    });
+    if (!user) {
+      throw new NotAcceptableException('نام کاربری پیدا نشد');
+    }
+
+    // generate the hash password
+    const hash = await argon.hash(dto.password);
+    const updatedUser = await this.prisma.user.update({
+      where: {
+        username: dto.username,
+      },
+      data: {
+        password: hash,
+      },
+    });
     // save the user into the dataabase
   }
 

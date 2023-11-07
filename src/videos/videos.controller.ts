@@ -1,5 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Body, Post } from '@nestjs/common';
 import { VideosService } from './videos.service';
+import { SubmitOrderDto } from './dto/SubmitOrderDto';
+import { MembershipItem } from './dto/MembershipItem';
 
 @Controller('videos')
 export class VideosController {
@@ -28,5 +30,15 @@ export class VideosController {
   @Get('image/:id')
   getImageById(@Param('id') id: string) {
     return this.videoServices.getImageById(id);
+  }
+
+  @Post('/submit')
+  submitOrder(@Body() dto: SubmitOrderDto) {
+    return this.videoServices.submitOrder(dto);
+  }
+
+  @Post('/submititems')
+  submitOrderItems(@Body() dto: MembershipItem) {
+    return this.videoServices.submitItems(dto);
   }
 }
