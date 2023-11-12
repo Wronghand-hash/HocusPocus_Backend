@@ -8,6 +8,7 @@ import { VideosDto } from './dto/VideoDto';
 import { orderItemDto } from './dto/orderItemDto';
 import { OrderStatusDto } from './dto/orderStatus';
 import { ProductStatusDto } from './dto/productStatus';
+import { MembershipItemDto } from './dto/MembershipItemDto';
 
 @Injectable()
 export class ManagementService {
@@ -161,6 +162,26 @@ export class ManagementService {
     });
 
     return { order: order };
+  }
+
+  // membership functions
+
+  async getMemberships() {
+    const memberships = await this.prismaService.membership.findMany({});
+
+    return { memberships: memberships };
+  }
+
+  async getMembershipItems(dto: MembershipItemDto) {
+    console.log(dto);
+    if (dto) {
+      const membershipItems = await this.prismaService.membershipItem.findMany({
+        where: {
+          membership_id: Number(dto.membership_id),
+        },
+      });
+      return { membershipItems: membershipItems };
+    }
   }
 
   // category services

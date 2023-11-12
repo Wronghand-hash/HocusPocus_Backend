@@ -24,6 +24,7 @@ import { AuthenticatedGuard } from 'src/auth/authGuards/authenticated.guards';
 import { orderItemDto } from './dto/orderItemDto';
 import { OrderStatusDto } from './dto/orderStatus';
 import { ProductStatusDto } from './dto/productStatus';
+import { MembershipItemDto } from './dto/MembershipItemDto';
 
 @Controller('management')
 export class ManagementController {
@@ -109,6 +110,18 @@ export class ManagementController {
   @Get('info')
   gettingDesiredInfo() {
     return { msg: 'return desired info from database' };
+  }
+
+  // membership requests
+
+  @Get('/memberships')
+  getMemberships() {
+    return this.managementService.getMemberships();
+  }
+
+  @Post('/membershipitems')
+  getMembershipItems(@Body() dto: MembershipItemDto) {
+    return this.managementService.getMembershipItems(dto);
   }
 
   // videos and training section requests

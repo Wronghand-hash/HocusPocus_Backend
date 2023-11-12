@@ -13,6 +13,7 @@ import { ManagementModule } from './management/management.module';
 import { VideosModule } from './videos/videos.module';
 import { CommentsModule } from './comments/comments.module';
 import { VideoCommentsModule } from './video-comments/video-comments.module';
+import { MembershipModule } from './membership/membership.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { VideoCommentsModule } from './video-comments/video-comments.module';
     VideosModule,
     CommentsModule,
     VideoCommentsModule,
+    MembershipModule,
   ],
   controllers: [AppController],
   providers: [AppService],
