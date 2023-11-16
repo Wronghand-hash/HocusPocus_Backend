@@ -35,20 +35,23 @@ enum UserTypes {
 }
 
 model Products {
-  id            Int             @id @default(autoincrement())
-  createdAt     DateTime        @default(now())
-  title         String
-  price         Float
-  special_offer Boolean?        @default(false)
-  description   String?
-  brand         String?
-  type          String?
-  category      String?
-  design        String?
-  mode          Boolean         @default(false)
-  inStock       Boolean?        @default(true)
-  ProductImages ProductImages[]
-  Comments      Comments[]
+  id             Int             @id @default(autoincrement())
+  createdAt      DateTime        @default(now())
+  title          String
+  price          Float
+  special_offer  Boolean?        @default(false)
+  description    String?
+  brand          String?
+  type           String?
+  category       String?
+  design         String?
+  discount       String?
+  quantity       String?
+  weeksSelection Boolean?        @default(false)
+  mode           Boolean         @default(false)
+  inStock        Boolean?        @default(true)
+  ProductImages  ProductImages[]
+  Comments       Comments[]
 }
 
 model Courses {

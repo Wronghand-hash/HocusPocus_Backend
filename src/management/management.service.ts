@@ -26,6 +26,7 @@ export class ManagementService {
         type: dto.type,
         brand: dto.brand,
         design: dto.design,
+        quantity: dto.quantity,
         category: dto.category,
         description: dto.description,
       },
@@ -46,6 +47,8 @@ export class ManagementService {
         description: true,
         design: true,
         inStock: true,
+        special_offer: true,
+        weeksSelection: true,
         Comments: true,
         ProductImages: {
           select: {
@@ -95,6 +98,54 @@ export class ManagementService {
       },
       data: {
         special_offer: true,
+      },
+    });
+    return { product: product };
+  }
+
+  async deupdateProductStatus(dto: ProductStatusDto) {
+    const product = await this.prismaService.products.update({
+      where: {
+        id: Number(dto.productId),
+      },
+      data: {
+        special_offer: false,
+      },
+    });
+    return { product: product };
+  }
+
+  async updateWeekSelection(dto: ProductStatusDto) {
+    const product = await this.prismaService.products.update({
+      where: {
+        id: Number(dto.productId),
+      },
+      data: {
+        weeksSelection: true,
+      },
+    });
+    return { product: product };
+  }
+
+  async deupdateWeekSelection(dto: ProductStatusDto) {
+    const product = await this.prismaService.products.update({
+      where: {
+        id: Number(dto.productId),
+      },
+      data: {
+        weeksSelection: false,
+      },
+    });
+    return { product: product };
+  }
+
+  async setDiscount(id: string, dto: ProductStatusDto) {
+    const product = await this.prismaService.products.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        discount: dto.discount,
       },
     });
     return { product: product };

@@ -81,9 +81,29 @@ export class ManagementController {
     return this.managementService.updateProductStatus(dto);
   }
 
+  @Post('/updateweekselection')
+  updateProductWeekSelection(@Body() dto: ProductStatusDto) {
+    return this.managementService.updateWeekSelection(dto);
+  }
+
+  @Post('/deupdateproductstatus')
+  deupdateProductStatus(@Body() dto: ProductStatusDto) {
+    return this.managementService.deupdateProductStatus(dto);
+  }
+
+  @Post('/deupdateweekselection')
+  deupdateProductWeekSelection(@Body() dto: ProductStatusDto) {
+    return this.managementService.deupdateWeekSelection(dto);
+  }
+
   @Post('/removeproduct/:id')
   removeProduct(@Param('id') id: string) {
     return this.managementService.removeProduct(id);
+  }
+
+  @Post('/setdiscount/:id')
+  setDiscount(@Param('id') id: string, @Body() dto: ProductStatusDto) {
+    return this.managementService.setDiscount(id, dto);
   }
 
   // orders requests

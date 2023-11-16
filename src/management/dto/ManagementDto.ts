@@ -9,6 +9,9 @@ export class ManagementDto {
   @IsNotEmpty({ message: 'قیمت کالا را وارد کنید' })
   price: number;
 
+  @IsNotEmpty({ message: 'لطفا تعداد کالا را وارد کنید' })
+  quantity: string;
+
   description: string;
 
   @IsNotEmpty({ message: 'برند کالا را وارد کنید' })
