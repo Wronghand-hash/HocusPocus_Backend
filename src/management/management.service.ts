@@ -48,6 +48,8 @@ export class ManagementService {
         design: true,
         inStock: true,
         special_offer: true,
+        discount: true,
+        quantity: true,
         weeksSelection: true,
         Comments: true,
         ProductImages: {

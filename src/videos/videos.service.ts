@@ -17,7 +17,7 @@ export class VideosService {
         price: true,
         description: true,
         trainer: true,
-        CoursesImages: true,
+        CoursesImages: { take: 2 },
       },
     });
     return { courses: courses };
@@ -58,7 +58,7 @@ export class VideosService {
         price: true,
         description: true,
         trainer: true,
-        CoursesImages: true,
+        CoursesImages: { take: 1 },
       },
     });
 
@@ -80,7 +80,7 @@ export class VideosService {
         price: true,
         description: true,
         trainer: true,
-        CoursesImages: true,
+        CoursesImages: { take: 1 },
       },
     });
     return { courses: courses };

@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ProductsService } from './products.service';
+import { PaginationDto } from './dto/PaginationDto';
 
 @Controller('products')
 export class ProductsController {
@@ -8,6 +9,11 @@ export class ProductsController {
   @Get('/')
   getAllProducts() {
     return this.productService.getAllProducts();
+  }
+
+  @Post('/products')
+  getPagination(@Body() dto: PaginationDto) {
+    return this.productService.getPagination(dto);
   }
 
   @Get('latest')
