@@ -215,4 +215,9 @@ export class ManagementController {
   removeComment(@Param('id') id: string) {
     return this.managementService.removeComment(id);
   }
+
+  @Post('/removevideocomment/:id')
+  removeCourseComment(@Param('id') id: string) {
+    return this.managementService.removeCourseComment(id);
+  }
 }

@@ -266,6 +266,7 @@ export class ManagementService {
         description: true,
         trainer: true,
         CoursesImages: true,
+        VideoComments: true,
       },
     });
     return { courses: courses };
@@ -321,6 +322,12 @@ export class ManagementService {
 
   async removeComment(id: string) {
     const comment = await this.prismaService.comments.delete({
+      where: { id: Number(id) },
+    });
+  }
+
+  async removeCourseComment(id: string) {
+    const comment = await this.prismaService.videoComments.delete({
       where: { id: Number(id) },
     });
   }

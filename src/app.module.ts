@@ -14,10 +14,12 @@ import { VideosModule } from './videos/videos.module';
 import { CommentsModule } from './comments/comments.module';
 import { VideoCommentsModule } from './video-comments/video-comments.module';
 import { MembershipModule } from './membership/membership.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    CacheModule.register(),
     PassportModule,
     UserModule,
     AuthModule,

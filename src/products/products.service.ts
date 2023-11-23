@@ -10,17 +10,17 @@ export class ProductsService {
       orderBy: {
         createdAt: 'desc',
       },
+      take: 8,
       select: {
         id: true,
         title: true,
         price: true,
-        brand: true,
-        type: true,
         category: true,
         discount: true,
         quantity: true,
-        design: true,
-        ProductImages: { take: 2 },
+        ProductImages: {
+          take: 2,
+        },
       },
     });
     return { products: products };
@@ -70,7 +70,7 @@ export class ProductsService {
         quantity: true,
         category: true,
         description: true,
-        ProductImages: { take: 2 },
+        ProductImages: { take: 1 },
       },
     });
 
