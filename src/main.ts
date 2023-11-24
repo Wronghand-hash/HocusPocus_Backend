@@ -7,7 +7,7 @@ import * as passport from 'passport';
 import { default as Redis } from 'ioredis';
 import * as connectRedis from 'connect-redis';
 import * as bodyParser from 'body-parser';
-
+import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as multer from 'multer';
@@ -41,6 +41,7 @@ async function bootstrap() {
       extended: true,
     }),
   );
+  app.use(compression());
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
   app.set('trust proxy', 1);
