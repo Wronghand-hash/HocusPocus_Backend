@@ -106,6 +106,16 @@ export class ManagementController {
     return this.managementService.setDiscount(id, dto);
   }
 
+  @Post('/enablemode')
+  enableMode() {
+    return this.managementService.enableMode();
+  }
+
+  @Post('/deablemode')
+  deableMode() {
+    return this.managementService.deableMode();
+  }
+
   // orders requests
 
   @Get('/orders')

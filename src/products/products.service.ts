@@ -7,6 +7,9 @@ export class ProductsService {
   constructor(private readonly prismaService: PrismaService) {}
   async getAllProducts() {
     const products = await this.prismaService.products.findMany({
+      where: {
+        mode: false,
+      },
       orderBy: {
         createdAt: 'desc',
       },

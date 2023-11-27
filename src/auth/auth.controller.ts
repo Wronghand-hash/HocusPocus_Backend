@@ -50,6 +50,13 @@ export class AuthController {
     return this.authService.getUser(session.passport.user.username);
   }
 
+  @Post('ischeck')
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
+  loggingSomrhing(@Res({ passthrough: true }) res: Response) {
+    return { check: true };
+  }
+
   // @UseGuards(AtGuard)
   // @Post('logout')
   // logout(@GetCurrentUser('sub') userId: number) {

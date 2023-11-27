@@ -36,6 +36,9 @@ export class ManagementService {
 
   async getProducts() {
     const products = await this.prismaService.products.findMany({
+      where: {
+        mode: false,
+      },
       orderBy: { id: 'asc' },
       select: {
         id: true,
@@ -160,6 +163,18 @@ export class ManagementService {
       },
       data: {
         mode: true,
+      },
+    });
+    return { product: product };
+  }
+
+  async deableMode() {
+    const product = await this.prismaService.products.updateMany({
+      where: {
+        type: 'کارت ها',
+      },
+      data: {
+        mode: false,
       },
     });
     return { product: product };
