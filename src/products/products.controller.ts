@@ -11,9 +11,9 @@ export class ProductsController {
     return this.productService.getAllProducts();
   }
 
-  @Post('/products')
-  getPagination(@Body() dto: PaginationDto) {
-    return this.productService.getPagination(dto);
+  @Get('/products/:page')
+  getPagination(@Param('page') page: string) {
+    return this.productService.getPagination(page);
   }
 
   @Get('latest')

@@ -29,13 +29,13 @@ export class ProductsService {
     return { products: products };
   }
 
-  async getPagination(dto: PaginationDto) {
+  async getPagination(page: string) {
     const products = await this.prismaService.products.findMany({
       orderBy: {
         id: 'desc',
       },
-      take: Number(dto.take),
-      skip: Number(dto.skip),
+      take: 8,
+      skip: Number(page) * 8,
       select: {
         createdAt: true,
         id: true,
