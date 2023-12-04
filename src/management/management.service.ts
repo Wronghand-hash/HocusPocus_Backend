@@ -39,7 +39,7 @@ export class ManagementService {
       where: {
         mode: false,
       },
-      orderBy: { id: 'asc' },
+      orderBy: { id: 'desc' },
       select: {
         id: true,
         title: true,

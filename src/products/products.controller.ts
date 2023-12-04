@@ -16,6 +16,11 @@ export class ProductsController {
     return this.productService.getPagination(page);
   }
 
+  @Get('/filter/:page/:filter')
+  getFilter(@Param('page') page: string, @Param('filter') filter: string) {
+    return this.productService.getFilter(page, filter);
+  }
+
   @Get('latest')
   getLatest() {
     return this.productService.getLatestProduct();
@@ -24,6 +29,11 @@ export class ProductsController {
   @Get('lastfour')
   getLastFour() {
     return this.productService.getFourBeforeOne();
+  }
+
+  @Get('discounts')
+  getDiscounted() {
+    return this.productService.getDiscounted();
   }
 
   @Get(':id')
