@@ -57,6 +57,12 @@ export class AuthController {
     return { check: true };
   }
 
+  @Post('authenticated')
+  @UseGuards(AuthenticatedGuard)
+  isAuth(@Res({ passthrough: true }) res: Response) {
+    return { check: true };
+  }
+
   // @UseGuards(AtGuard)
   // @Post('logout')
   // logout(@GetCurrentUser('sub') userId: number) {
