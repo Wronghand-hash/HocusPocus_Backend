@@ -124,6 +124,7 @@ model Membership {
   id             Int              @id @default(autoincrement())
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt
+  status         String?          @default("PROCESSING")
   fullname       String?
   phonenumber    String?
   email          String?

@@ -154,6 +154,11 @@ export class ManagementController {
     return this.managementService.getMembershipItems(dto);
   }
 
+  @Post('/updatemembershipstat')
+  updateMembershipStatus(@Body() dto: OrderStatusDto) {
+    return this.managementService.updateMembershipStatus(dto);
+  }
+
   // videos and training section requests
 
   @Get('/courses')
