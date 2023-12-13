@@ -11,6 +11,7 @@ import { UserService } from './user.service';
 import { LocalAuthGuard } from 'src/auth/common/guards/local.guard';
 import { UserInfoDto } from './dto';
 import { AuthenticatedGuard } from 'src/auth/authGuards/authenticated.guards';
+import { UserOPDTO } from './dto/userOPDto';
 
 @Controller('user')
 export class UserController {
@@ -19,6 +20,11 @@ export class UserController {
   @Get('me')
   getMe() {
     return 'info';
+  }
+
+  @Post('/username')
+  getUsername(@Body() dto: UserOPDTO) {
+    return this.userServices.getUsername(dto);
   }
 
   @Get('/orders')

@@ -1,6 +1,7 @@
 import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { UserInfoDto } from './dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { UserOPDTO } from './dto/userOPDto';
 
 @Injectable()
 export class UserService {
@@ -59,6 +60,19 @@ export class UserService {
       },
     });
     return { msg: 'properties have been updated', user: updatedUser };
+  }
+
+  async getUsername(dto: UserOPDTO) {
+    const username = await this.prismaService.user.findUnique({
+      where: {
+        id: Number(dto.userId),
+      },
+      select: {
+        username: true,
+        id: true,
+      },
+    });
+    return { username: username };
   }
 
   async getProfile(username: string) {
