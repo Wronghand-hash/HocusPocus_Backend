@@ -15,6 +15,7 @@ import { CommentsModule } from './comments/comments.module';
 import { VideoCommentsModule } from './video-comments/video-comments.module';
 import { MembershipModule } from './membership/membership.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { FiltersModule } from './filters/filters.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     CommentsModule,
     VideoCommentsModule,
     MembershipModule,
+    FiltersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
