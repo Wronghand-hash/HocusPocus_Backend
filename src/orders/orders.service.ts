@@ -51,7 +51,6 @@ export class OrdersService {
   }
 
   async submitItems(dto: OrderItemsDto) {
-    console.log(JSON.stringify(dto.items));
     const orderItems = await this.prismaService.orderItems.create({
       data: {
         items: dto.items,

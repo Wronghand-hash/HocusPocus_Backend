@@ -26,7 +26,6 @@ export class AuthController {
 
   @Post('signup')
   signup(@Body() dto: AuthDto) {
-    console.log(dto);
     return this.authService.signup(dto);
   }
 
@@ -78,7 +77,6 @@ export class AuthController {
 
   @Post('reset')
   reset(@Body() dto: RecoveryDto) {
-    console.log(dto);
     return this.authService.resetPass(dto);
   }
 

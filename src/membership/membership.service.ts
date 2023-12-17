@@ -18,7 +18,6 @@ export class MembershipService {
   }
 
   async getMembershipItems(dto: MembershipItemDto) {
-    console.log(dto);
     if (dto) {
       const membershipItems = await this.prismaService.membershipItem.findMany({
         where: {

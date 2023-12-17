@@ -124,7 +124,6 @@ export class ProductsService {
   }
 
   async getFilter(page: string, filter: string) {
-    console.log(page, filter);
     // const products = await this.prismaService.products.findMany({
     //   where: { discount: { not: null } },
     //   select: {

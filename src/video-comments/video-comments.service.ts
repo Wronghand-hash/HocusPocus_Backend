@@ -16,7 +16,6 @@ export class VideoCommentsService {
   }
 
   async submitComment(id: string, dto: SubmitCommentDto) {
-    console.log(id);
     const comment = await this.prismaService.videoComments.create({
       data: {
         course_id: Number(id),

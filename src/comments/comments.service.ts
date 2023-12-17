@@ -17,7 +17,6 @@ export class CommentsService {
   }
 
   async submitComment(id: string, dto: SubmitCommentDto) {
-    console.log(dto);
     const comment = await this.prismaService.comments.create({
       data: {
         product_id: Number(id),
@@ -29,7 +28,6 @@ export class CommentsService {
   }
 
   async submitVideoComment(id: string, dto: SubmitCommentDto) {
-    console.log(dto);
     const comment = await this.prismaService.comments.create({
       data: {
         product_id: Number(id),

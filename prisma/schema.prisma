@@ -148,6 +148,23 @@ model orderItems {
   order    Orders @relation(fields: [order_id], references: [id])
 }
 
+model filters {
+  id          Int           @id @default(autoincrement())
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  name        String
+  filterItems filterItems[]
+}
+
+model filterItems {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  name       String
+  filter_id  Int
+  filters    filters  @relation(fields: [filter_id], references: [id])
+}
+
 model Comments {
   id         Int      @id @default(autoincrement())
   created_at DateTime @default(now())

@@ -109,7 +109,6 @@ export class VideosService {
   }
 
   async submitItems(dto: MembershipItem) {
-    console.log(JSON.stringify(dto.items));
     const orderItems = await this.prismaService.membershipItem.create({
       data: {
         items: dto.items,
