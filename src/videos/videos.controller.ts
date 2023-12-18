@@ -1,7 +1,8 @@
-import { Controller, Get, Param, Body, Post } from '@nestjs/common';
+import { Controller, Get, Param, Body, Post, UseGuards } from '@nestjs/common';
 import { VideosService } from './videos.service';
 import { SubmitOrderDto } from './dto/SubmitOrderDto';
 import { MembershipItem } from './dto/MembershipItem';
+import { AuthenticatedGuard } from 'src/auth/authGuards/authenticated.guards';
 
 @Controller('videos')
 export class VideosController {
@@ -32,6 +33,7 @@ export class VideosController {
     return this.videoServices.getImageById(id);
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Post('/submit')
   submitOrder(@Body() dto: SubmitOrderDto) {
     return this.videoServices.submitOrder(dto);

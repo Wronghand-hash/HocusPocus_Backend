@@ -37,6 +37,8 @@ export class ManagementController {
     return this.managementService.getProducts();
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/addproduct')
   addProduct(@Body() dto: ManagementDto) {
     return this.managementService.addProduct(dto);
@@ -49,6 +51,8 @@ export class ManagementController {
     return { msg: 'here we will update some things' };
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(
@@ -71,46 +75,64 @@ export class ManagementController {
     return this.managementService.storeImage(file, body);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/removeproductimage/:id')
   removeProductImage(@Param('id') id: string) {
     return this.managementService.removeProductImage(id);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/updateproductstatus')
   updateProductStatus(@Body() dto: ProductStatusDto) {
     return this.managementService.updateProductStatus(dto);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/updateweekselection')
   updateProductWeekSelection(@Body() dto: ProductStatusDto) {
     return this.managementService.updateWeekSelection(dto);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/deupdateproductstatus')
   deupdateProductStatus(@Body() dto: ProductStatusDto) {
     return this.managementService.deupdateProductStatus(dto);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/deupdateweekselection')
   deupdateProductWeekSelection(@Body() dto: ProductStatusDto) {
     return this.managementService.deupdateWeekSelection(dto);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/removeproduct/:id')
   removeProduct(@Param('id') id: string) {
     return this.managementService.removeProduct(id);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/setdiscount/:id')
   setDiscount(@Param('id') id: string, @Body() dto: ProductStatusDto) {
     return this.managementService.setDiscount(id, dto);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/enablemode')
   enableMode() {
     return this.managementService.enableMode();
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/deablemode')
   deableMode() {
     return this.managementService.deableMode();
@@ -123,11 +145,15 @@ export class ManagementController {
     return this.managementService.getOrders();
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/orderitems')
   getOrderItems(@Body() dto: orderItemDto) {
     return this.managementService.getOrderItems(dto);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   // @Roles('ADMIN')
   // @UseGuards(LocalAuthGuard, RolesGuard)
   @Post('/updateorderstatus')
@@ -135,6 +161,8 @@ export class ManagementController {
     return this.managementService.updateOrderStatus(dto);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Roles('ADMIN')
   @UseGuards(LocalAuthGuard, RolesGuard)
   @Get('info')
@@ -144,16 +172,22 @@ export class ManagementController {
 
   // membership requests
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Get('/memberships')
   getMemberships() {
     return this.managementService.getMemberships();
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/membershipitems')
   getMembershipItems(@Body() dto: MembershipItemDto) {
     return this.managementService.getMembershipItems(dto);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/updatemembershipstat')
   updateMembershipStatus(@Body() dto: OrderStatusDto) {
     return this.managementService.updateMembershipStatus(dto);
@@ -161,11 +195,15 @@ export class ManagementController {
 
   // videos and training section requests
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Get('/courses')
   getAll() {
     return this.managementService.getAllCourses();
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/addvideo')
   @UseInterceptors(FileInterceptor('file'))
   uploadVideo(
@@ -180,6 +218,8 @@ export class ManagementController {
     return this.managementService.addVideo(file, body);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('courseimageupload')
   @UseInterceptors(FileInterceptor('file'))
   uploadCourseImage(
@@ -202,11 +242,15 @@ export class ManagementController {
     return this.managementService.storeCourseImage(file, body);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/removecourseimage/:id')
   removeCourseImage(@Param('id') id: string) {
     return this.managementService.removeCourseImage(id);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/removecourse/:id')
   removeCourse(@Param('id') id: string) {
     return this.managementService.removeCourse(id);

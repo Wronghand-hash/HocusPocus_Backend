@@ -22,6 +22,7 @@ export class UserController {
     return 'info';
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Post('/username')
   getUsername(@Body() dto: UserOPDTO) {
     return this.userServices.getUsername(dto);

@@ -1,6 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { FiltersService } from './filters.service';
 import { filtersDto } from './dto/filtersDto';
+import { AuthenticatedGuard } from 'src/auth/authGuards/authenticated.guards';
+import { RolesGuard } from 'src/auth/common/guards/roleBased.guard';
+import { Roles } from 'src/auth/common/decorators/Role.decorator';
 
 @Controller('filters')
 export class FiltersController {
@@ -16,6 +19,8 @@ export class FiltersController {
     return this.filterService.getFilterItems();
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/newfilter')
   addFilter(@Body() dto: filtersDto) {
     return this.filterService.addFilter(dto);
