@@ -9,7 +9,6 @@ import { AuthDto } from './dto';
 import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { Tokens } from './types';
-import { JwtService } from '@nestjs/jwt';
 import { RecoveryDto } from './dto/RecoveryDto';
 @Injectable({})
 export class AuthService {

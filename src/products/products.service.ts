@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PaginationDto } from './dto/PaginationDto';
+import { DiscountDto } from './dto/DiscountDto';
 
 @Injectable()
 export class ProductsService {
@@ -172,5 +173,38 @@ export class ProductsService {
 
     const imageDataURL = `data:image/jpeg;base64,${image.buffer}`;
     return { image: imageDataURL };
+  }
+
+  async searchProducts(text: string) {
+    // const products = await this.prismaService.products.findMany({
+    //   where: {
+    //     title: text,
+    //   },
+    // });
+  }
+
+  async validateDiscount(dto: DiscountDto) {
+    let check = false;
+    const discount = await this.prismaService.discounts.findUnique({
+      where: {
+        code: dto.code,
+      },
+      select: {
+        valid: true,
+        perc: true,
+      },
+    });
+    if (discount) {
+      check = true;
+    }
+    const update = await this.prismaService.discounts.update({
+      where: {
+        code: dto.code,
+      },
+      data: {
+        valid: false,
+      },
+    });
+    return { check: check, perc: discount.perc, valid: discount.valid };
   }
 }

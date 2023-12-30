@@ -188,3 +188,12 @@ model VideoComments {
   course     Courses  @relation(fields: [course_id], references: [id])
   user       User     @relation(fields: [user_id], references: [id])
 }
+
+model Discounts {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  valid      Boolean  @default(true)
+  perc       String
+  code       String   @unique
+}

@@ -25,6 +25,7 @@ import { orderItemDto } from './dto/orderItemDto';
 import { OrderStatusDto } from './dto/orderStatus';
 import { ProductStatusDto } from './dto/productStatus';
 import { MembershipItemDto } from './dto/MembershipItemDto';
+import { DiscountDto } from './dto/discountDto';
 
 @Controller('management')
 export class ManagementController {
@@ -278,5 +279,23 @@ export class ManagementController {
   @Post('/removevideocomment/:id')
   removeCourseComment(@Param('id') id: string) {
     return this.managementService.removeCourseComment(id);
+  }
+
+  // dicount system
+
+  @Get('/discounts')
+  getDiscounts() {
+    return this.managementService.getDiscounts();
+  }
+
+  @Post('/generatediscount')
+  getDiscountCode(@Body() dto: DiscountDto) {
+    console.log(dto);
+    return this.managementService.getDiscountCode(dto);
+  }
+
+  @Post('/validatecode')
+  validateCode(@Body() dto: DiscountDto) {
+    return this.managementService.validateDiscount(dto);
   }
 }
