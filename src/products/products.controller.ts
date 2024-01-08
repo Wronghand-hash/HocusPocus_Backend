@@ -37,6 +37,11 @@ export class ProductsController {
     return this.productService.getDiscounted();
   }
 
+  @Post('search')
+  searchProducts(@Body() body: any) {
+    return this.productService.searchProducts(body);
+  }
+
   @Get(':id')
   getProductsById(@Param('id') id: string) {
     return this.productService.getProductById(id);
@@ -45,11 +50,6 @@ export class ProductsController {
   @Get('image/:id')
   getImageById(@Param('id') id: string) {
     return this.productService.getImageById(id);
-  }
-
-  @Post('search')
-  searchProducts(@Param('text') text: string) {
-    return this.productService.searchProducts(text);
   }
 
   @Post('/validatecode')

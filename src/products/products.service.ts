@@ -175,12 +175,37 @@ export class ProductsService {
     return { image: imageDataURL };
   }
 
-  async searchProducts(text: string) {
-    // const products = await this.prismaService.products.findMany({
-    //   where: {
-    //     title: text,
-    //   },
-    // });
+  async searchProducts(body: any) {
+    console.log('the one you are looking for ', body.text + '*');
+    const searchResults = await this.prismaService.products.findMany({
+      where: {
+        OR: [
+          { title: { contains: body.text } },
+          { description: { contains: body.text } },
+          { title: { contains: body.text + '*' } }, // Wildcard at the end
+          { description: { contains: body.text + '*' } }, // Wildcard at the end
+          { title: { contains: '*' + body.text } }, // Wildcard at the beginning
+          { description: { contains: '*' + body.text } }, // Wildcard at the beginning
+          { title: { contains: '*' + body.text + '*' } }, // Wildcard at both ends
+          { description: { contains: '*' + body.text + '*' } }, // Wildcard at both ends
+        ],
+      },
+      select: {
+        createdAt: true,
+        id: true,
+        title: true,
+        price: true,
+        discount: true,
+        brand: true,
+        type: true,
+        design: true,
+        category: true,
+        description: true,
+        ProductImages: { take: 2 },
+      },
+    });
+
+    return searchResults;
   }
 
   async validateDiscount(dto: DiscountDto) {
