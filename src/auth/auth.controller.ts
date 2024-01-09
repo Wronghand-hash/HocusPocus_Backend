@@ -9,12 +9,14 @@ import {
   Get,
   Session,
   Req,
+  Redirect,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
+import axios from 'axios';
 import { LocalAuthGuard } from './common/guards/local.guard';
-import { Response } from 'express';
+import { Response, response } from 'express';
 import { RolesGuard } from './common/guards/roleBased.guard';
 import { Roles } from './common/decorators/Role.decorator';
 import { AuthenticatedGuard } from './authGuards/authenticated.guards';
@@ -23,6 +25,74 @@ import { RecoveryDto } from './dto/RecoveryDto';
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
+
+  @Post('/payment')
+  async makePaymentRequest(@Res({ passthrough: true }) res: Response) {
+    const data = JSON.stringify({
+      merchant_id: process.env.MERCHANT_ID,
+      amount: '1100',
+      callback_url: 'https://hocuspocusmagicstore.com/',
+      description: 'Transaction description.',
+      metadata: {
+        mobile: '09106869409',
+        email: 'info.test@gmail.com',
+      },
+    });
+
+    const config = {
+      url: 'https://api.zarinpal.com/pg/v4/payment/request.json',
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      data: data,
+    };
+
+    try {
+      const response = await axios(config);
+      res.json(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Post('/togateway')
+  async toPaymentGateway(@Body() body: any, @Res() res: Response) {
+    // console.log(authorityNum);
+    // try {
+    //   const response = await axios.get(
+    //     `https://www.zarinpal.com/pg/StartPay/ . $result['data'][${authorityNum}]`,
+    //   );
+    //   const authority = response.data[authorityNum];
+
+    //   // Use the authority value as needed
+    // } catch (error) {
+    //   console.error(error);
+    // }
+
+    const data = JSON.stringify({
+      authority: body.authority,
+    });
+
+    const config = {
+      url: `https://www.zarinpal.com/pg/StartPay/${body.authority}`,
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      data: data,
+    };
+
+    try {
+      const response = await axios(config);
+      console.log(response);
+      res.redirect(`https://www.zarinpal.com/pg/StartPay/${body.authority}`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   @Post('signup')
   signup(@Body() dto: AuthDto) {
