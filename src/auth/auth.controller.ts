@@ -10,27 +10,36 @@ import {
   Session,
   Req,
   Redirect,
+  UseInterceptors,
+  Param,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { LocalAuthGuard } from './common/guards/local.guard';
 import { Response, response } from 'express';
 import { RolesGuard } from './common/guards/roleBased.guard';
 import { Roles } from './common/decorators/Role.decorator';
 import { AuthenticatedGuard } from './authGuards/authenticated.guards';
 import { RecoveryDto } from './dto/RecoveryDto';
+import { RedirectInterceptor } from './interceptors/RedirectInterceptor';
+import { HttpService } from '@nestjs/axios';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private httpService: HttpService,
+  ) {}
 
   @Post('/payment')
   async makePaymentRequest(@Res({ passthrough: true }) res: Response) {
     const data = JSON.stringify({
       merchant_id: process.env.MERCHANT_ID,
-      amount: '1100',
+      amount: '20100',
       callback_url: 'https://hocuspocusmagicstore.com/',
       description: 'Transaction description.',
       metadata: {
@@ -51,14 +60,19 @@ export class AuthController {
 
     try {
       const response = await axios(config);
+      console.log(response.data);
       res.json(response.data);
     } catch (error) {
       console.log(error);
     }
   }
 
-  @Post('/togateway')
-  async toPaymentGateway(@Body() body: any, @Res() res: Response) {
+  @Get('/togateway/:authority')
+  @Redirect('https://hocuspocusmagicstore.com')
+  async toPaymentGateway(
+    @Param('authority') authority: string,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     // console.log(authorityNum);
     // try {
     //   const response = await axios.get(
@@ -71,27 +85,14 @@ export class AuthController {
     //   console.error(error);
     // }
 
-    const data = JSON.stringify({
-      authority: body.authority,
-    });
+    const url = `https://www.zarinpal.com/pg/StartPay/${authority}`;
 
-    const config = {
-      url: `https://www.zarinpal.com/pg/StartPay/${body.authority}`,
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      data: data,
-    };
-
-    try {
-      const response = await axios(config);
-      console.log(response);
-      res.redirect(`https://www.zarinpal.com/pg/StartPay/${body.authority}`);
-    } catch (error) {
-      console.log(error);
-    }
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+    );
+    // const response = await this.httpService.get(url).toPromise();
+    res.redirect('https://hocuspocusmagicstore.com');
   }
 
   @Post('signup')

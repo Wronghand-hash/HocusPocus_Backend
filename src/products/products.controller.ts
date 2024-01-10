@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Redirect,
+  Res,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { PaginationDto } from './dto/PaginationDto';
 import { DiscountDto } from './dto/DiscountDto';
+import { Response } from 'express';
 
 @Controller('products')
 export class ProductsController {
@@ -20,6 +29,11 @@ export class ProductsController {
   @Get('/filter/:page/:filter')
   getFilter(@Param('page') page: string, @Param('filter') filter: string) {
     return this.productService.getFilter(page, filter);
+  }
+
+  @Get('redirect')
+  redirect(@Res() res: Response) {
+    res.redirect('https://hocuspocusmagicstore.com/');
   }
 
   @Get('latest')
