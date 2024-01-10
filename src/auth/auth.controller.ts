@@ -27,6 +27,8 @@ import { RedirectInterceptor } from './interceptors/RedirectInterceptor';
 import { HttpService } from '@nestjs/axios';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { lastValueFrom } from 'rxjs';
+import { RedirectError } from './interceptors/RedirectCustom';
 
 @Controller('auth')
 export class AuthController {
@@ -39,7 +41,7 @@ export class AuthController {
   async makePaymentRequest(@Res({ passthrough: true }) res: Response) {
     const data = JSON.stringify({
       merchant_id: process.env.MERCHANT_ID,
-      amount: '20100',
+      amount: '50100',
       callback_url: 'https://hocuspocusmagicstore.com/',
       description: 'Transaction description.',
       metadata: {
@@ -61,38 +63,36 @@ export class AuthController {
     try {
       const response = await axios(config);
       console.log(response.data);
+      // const url = `https://www.zarinpal.com/pg/StartPay/${response.data.data.authority}`;
       res.json(response.data);
     } catch (error) {
       console.log(error);
     }
   }
 
+  // res.setHeader(
+  //   'Access-Control-Allow-Headers',
+  //   'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+  // );
+  // // const response = await this.httpService.get(url).toPromise();
+
+  // const response = await lastValueFrom(this.httpService.get(url));
+
+  // return { url: 'http://google.com' };
   @Get('/togateway/:authority')
-  @Redirect('https://hocuspocusmagicstore.com')
   async toPaymentGateway(
     @Param('authority') authority: string,
     @Res({ passthrough: true }) res: Response,
-  ) {
-    // console.log(authorityNum);
-    // try {
-    //   const response = await axios.get(
-    //     `https://www.zarinpal.com/pg/StartPay/ . $result['data'][${authorityNum}]`,
-    //   );
-    //   const authority = response.data[authorityNum];
-
-    //   // Use the authority value as needed
-    // } catch (error) {
-    //   console.error(error);
-    // }
-
+  ): Promise<void> {
     const url = `https://www.zarinpal.com/pg/StartPay/${authority}`;
-
-    res.setHeader(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-    );
-    // const response = await this.httpService.get(url).toPromise();
-    res.redirect('https://hocuspocusmagicstore.com');
+    const response = await axios.get(url);
+    res.set({
+      'Content-Type': 'text/html',
+      charset: 'UTF-8',
+      'X-UA-Compatible': 'ie=edge',
+      // Add more headers as needed
+    });
+    res.send(response.data);
   }
 
   @Post('signup')
