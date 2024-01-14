@@ -115,6 +115,8 @@ model Orders {
   fullname              String?
   region                String?
   postal_code           String?
+  authority             String?      @unique
+  payment               Boolean      @default(false)
   user_id               Int
   user                  User         @relation(fields: [user_id], references: [id])
   orderItems            orderItems[]
@@ -196,4 +198,17 @@ model Discounts {
   valid      Boolean  @default(true)
   perc       String
   code       String   @unique
+}
+
+model PaymentRecords {
+  id           Int      @id @default(autoincrement())
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  authority    String   @unique
+  name         String
+  amount       String
+  user_id      Int
+  order_id     Int
+  status       Boolean  @default(false)
+  phone_number String
 }
