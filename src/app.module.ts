@@ -16,11 +16,12 @@ import { VideoCommentsModule } from './video-comments/video-comments.module';
 import { MembershipModule } from './membership/membership.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { FiltersModule } from './filters/filters.module';
+import { PaymentRecordsModule } from './payment-records/payment-records.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
     CacheModule.register(),
+    ConfigModule.forRoot({ isGlobal: true }),
     PassportModule,
     UserModule,
     AuthModule,
@@ -33,6 +34,7 @@ import { FiltersModule } from './filters/filters.module';
     VideoCommentsModule,
     MembershipModule,
     FiltersModule,
+    PaymentRecordsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
