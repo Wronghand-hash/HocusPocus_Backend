@@ -17,7 +17,7 @@ export class PaymentRecordsController {
     const data = JSON.stringify({
       merchant_id: process.env.MERCHANT_ID,
       amount: dto.amount,
-      callback_url: 'http://localhost:3000/shop/purchaseSuccess',
+      callback_url: 'https://hocuspocusmagicstore.com/shop/purchaseSuccess',
       description: 'Transaction description.',
       metadata: {
         mobile: dto.phoneNumber,
