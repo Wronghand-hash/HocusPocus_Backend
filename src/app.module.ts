@@ -14,14 +14,15 @@ import { VideosModule } from './videos/videos.module';
 import { CommentsModule } from './comments/comments.module';
 import { VideoCommentsModule } from './video-comments/video-comments.module';
 import { MembershipModule } from './membership/membership.module';
-import { CacheModule } from '@nestjs/cache-manager';
+import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { FiltersModule } from './filters/filters.module';
 import { PaymentRecordsModule } from './payment-records/payment-records.module';
 
 @Module({
   imports: [
-    CacheModule.register(),
     ConfigModule.forRoot({ isGlobal: true }),
+    CacheModule.register({}),
     PassportModule,
     UserModule,
     AuthModule,
@@ -37,6 +38,12 @@ import { PaymentRecordsModule } from './payment-records/payment-records.module';
     PaymentRecordsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
+  ],
 })
 export class AppModule {}
