@@ -4,6 +4,7 @@ import { PaymentRecordsDto } from './dto/PaymentRecordsDto';
 import { Response } from 'express';
 import axios from 'axios';
 import { GatewayInfoDto } from './dto/GatewayInfoDto';
+import { VerifyPaymentDto } from './dto/VerifyPaymentDto';
 
 @Controller('payment-records')
 export class PaymentRecordsController {
@@ -52,6 +53,37 @@ export class PaymentRecordsController {
       authCode = response.data.data.authority;
       this.updateAuth(authCode, body.orderId);
       this.addrecord(body, authCode);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Post('/verify')
+  async paymentVerify(
+    @Res({ passthrough: true }) res: Response,
+    @Body() dto: VerifyPaymentDto,
+  ) {
+    const data = JSON.stringify({
+      merchant_id: process.env.MERCHANT_ID,
+      amount: dto.amount,
+      authority: dto.authority,
+    });
+
+    const config = {
+      url: 'https://api.zarinpal.com/pg/v4/payment/verify.json',
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      data: data,
+    };
+
+    try {
+      const response = await axios(config);
+      console.log(response.data);
+      // const url = `https://www.zarinpal.com/pg/StartPay/${response.data.data.authority}`;
+      res.json(response.data);
     } catch (error) {
       console.log(error);
     }
