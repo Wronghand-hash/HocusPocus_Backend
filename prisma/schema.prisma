@@ -106,7 +106,7 @@ model Orders {
   id                    Int          @id @default(autoincrement())
   created_at            DateTime     @default(now())
   updated_at            DateTime     @updatedAt
-  status                String?      @default("PROCESSING")
+  status                String?      @default("NOT PAIED")
   totalPrice            String?
   estimatedDeliveryDays String?
   adderss               String?

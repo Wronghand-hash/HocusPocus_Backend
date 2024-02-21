@@ -219,8 +219,8 @@ export class ManagementController {
     return this.managementService.addVideo(file, body);
   }
 
-  @Roles('ADMIN') // Only admin role allowed
-  @UseGuards(AuthenticatedGuard, RolesGuard)
+  // @Roles('ADMIN') // Only admin role allowed
+  // @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('courseimageupload')
   @UseInterceptors(FileInterceptor('file'))
   uploadCourseImage(

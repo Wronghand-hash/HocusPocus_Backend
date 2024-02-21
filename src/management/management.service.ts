@@ -201,7 +201,11 @@ export class ManagementService {
   // order functions
 
   async getOrders() {
-    const orders = await this.prismaService.orders.findMany({});
+    const orders = await this.prismaService.orders.findMany({
+      orderBy: {
+        id: 'desc',
+      },
+    });
 
     return { orders: orders };
   }
@@ -358,6 +362,9 @@ export class ManagementService {
 
   async getDiscounts() {
     const discounts = await this.prismaService.discounts.findMany({
+      orderBy: {
+        id: 'desc',
+      },
       select: {
         id: true,
         valid: true,

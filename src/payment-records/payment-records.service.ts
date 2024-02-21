@@ -27,6 +27,7 @@ export class PaymentRecordsService {
       },
       data: {
         payment: true,
+        status: 'PROCESSING',
       },
     });
     this.updatePayment(auth);
@@ -55,7 +56,11 @@ export class PaymentRecordsService {
   }
 
   async getRecords() {
-    const records = await this.prismaService.paymentRecords.findMany({});
+    const records = await this.prismaService.paymentRecords.findMany({
+      orderBy: {
+        id: 'desc',
+      },
+    });
 
     return {
       records: records,
