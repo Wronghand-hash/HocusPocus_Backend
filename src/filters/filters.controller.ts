@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { FiltersService } from './filters.service';
 import { filtersDto } from './dto/filtersDto';
 import { AuthenticatedGuard } from 'src/auth/authGuards/authenticated.guards';
@@ -24,5 +24,12 @@ export class FiltersController {
   @Post('/newfilter')
   addFilter(@Body() dto: filtersDto) {
     return this.filterService.addFilter(dto);
+  }
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
+  @Post('/remove/:id')
+  removeFilter(@Param('id') id: string) {
+    console.log(id);
+    return this.filterService.removeFilter(id);
   }
 }

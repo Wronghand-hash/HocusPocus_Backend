@@ -28,4 +28,15 @@ export class FiltersService {
 
     return { filteritem: filterItem };
   }
+
+  async removeFilter(id: string) {
+    console.log(Number(id), 'this is services');
+    const filterItem = await this.prismaService.filterItems.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    return { msg: 'removed' };
+  }
 }
