@@ -18,6 +18,7 @@ import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { FiltersModule } from './filters/filters.module';
 import { PaymentRecordsModule } from './payment-records/payment-records.module';
+import { EditsModule } from './edits/edits.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { PaymentRecordsModule } from './payment-records/payment-records.module';
     MembershipModule,
     FiltersModule,
     PaymentRecordsModule,
+    EditsModule,
   ],
   controllers: [AppController],
   providers: [
