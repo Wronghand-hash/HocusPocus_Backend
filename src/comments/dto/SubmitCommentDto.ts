@@ -7,5 +7,7 @@ export class SubmitCommentDto {
 
   comment: string;
 
+  rating: string;
+
   username: string;
 }

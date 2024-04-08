@@ -173,6 +173,7 @@ model Comments {
   updated_at DateTime @updatedAt
   username   String?
   comment    String
+  rating     String?
   user_id    Int
   product_id Int
   product    Products @relation(fields: [product_id], references: [id])
@@ -196,6 +197,7 @@ model Discounts {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   valid      Boolean  @default(true)
+  days       String?
   perc       String
   code       String   @unique
 }

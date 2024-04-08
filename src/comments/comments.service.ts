@@ -19,6 +19,7 @@ export class CommentsService {
   async submitComment(id: string, dto: SubmitCommentDto) {
     const comment = await this.prismaService.comments.create({
       data: {
+        rating: dto.rating,
         product_id: Number(id),
         user_id: Number(dto.userId),
         comment: dto.comment,
