@@ -370,6 +370,7 @@ export class ManagementService {
         valid: true,
         code: true,
         perc: true,
+        days: true,
       },
     });
     return { discounts: discounts };
