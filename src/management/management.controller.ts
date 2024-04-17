@@ -33,6 +33,8 @@ export class ManagementController {
 
   // products requests
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Get('/products')
   getProducts() {
     return this.managementService.getProducts();
@@ -141,6 +143,8 @@ export class ManagementController {
 
   // orders requests
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Get('/orders')
   getOrders() {
     return this.managementService.getOrders();
@@ -259,11 +263,15 @@ export class ManagementController {
 
   // category requests
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/addcategory')
   addCategory(@Body() dto: CategoryDto) {
     return this.managementService.addCategory(dto);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Get('/categories')
   getCategories() {
     return this.managementService.getCategories();
@@ -271,11 +279,15 @@ export class ManagementController {
 
   // comment requests
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/removecomment/:id')
   removeComment(@Param('id') id: string) {
     return this.managementService.removeComment(id);
   }
 
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/removevideocomment/:id')
   removeCourseComment(@Param('id') id: string) {
     return this.managementService.removeCourseComment(id);
