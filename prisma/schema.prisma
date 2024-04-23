@@ -41,6 +41,7 @@ model Products {
   price          Float
   special_offer  Boolean?        @default(false)
   description    String?
+  cover          String?
   brand          String?
   type           String?
   category       String?

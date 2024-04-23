@@ -46,6 +46,11 @@ export class ProductsController {
     return this.productService.getFourBeforeOne();
   }
 
+  @Get('offers')
+  getOffers() {
+    return this.productService.getSpecialOffers();
+  }
+
   @Get('discounts')
   getDiscounted() {
     return this.productService.getDiscounted();

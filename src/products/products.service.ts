@@ -21,6 +21,7 @@ export class ProductsService {
         price: true,
         category: true,
         discount: true,
+        cover: true,
         quantity: true,
         ProductImages: {
           take: 2,
@@ -41,6 +42,7 @@ export class ProductsService {
         createdAt: true,
         id: true,
         title: true,
+        cover: true,
         price: true,
         brand: true,
         type: true,
@@ -69,6 +71,7 @@ export class ProductsService {
         price: true,
         brand: true,
         type: true,
+        cover: true,
         design: true,
         discount: true,
         quantity: true,
@@ -79,6 +82,35 @@ export class ProductsService {
     });
 
     return { product: product };
+  }
+
+  async getSpecialOffers() {
+    const products = await this.prismaService.products.findMany({
+      where: {
+        special_offer: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 4,
+      select: {
+        createdAt: true,
+        id: true,
+        title: true,
+        price: true,
+        brand: true,
+        type: true,
+        cover: true,
+        design: true,
+        discount: true,
+        quantity: true,
+        category: true,
+        description: true,
+        ProductImages: { take: 1 },
+      },
+    });
+
+    return { products: products };
   }
 
   async getFourBeforeOne() {
@@ -95,6 +127,7 @@ export class ProductsService {
         price: true,
         brand: true,
         type: true,
+        cover: true,
         design: true,
         category: true,
         description: true,
@@ -116,6 +149,7 @@ export class ProductsService {
         brand: true,
         type: true,
         design: true,
+        cover: true,
         category: true,
         description: true,
         ProductImages: { take: 2 },
@@ -153,6 +187,7 @@ export class ProductsService {
         title: true,
         price: true,
         brand: true,
+        cover: true,
         type: true,
         design: true,
         category: true,

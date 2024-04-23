@@ -80,6 +80,30 @@ export class ManagementController {
 
   @Roles('ADMIN') // Only admin role allowed
   @UseGuards(AuthenticatedGuard, RolesGuard)
+  @Post('cover')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadCover(
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: 'jpeg||png||webp',
+        })
+        .addMaxSizeValidator({
+          maxSize: 5000000,
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    file: Express.Multer.File,
+    @Body() body: any,
+  ) {
+    const { filename, path } = file;
+    return this.managementService.storeCover(file, body);
+  }
+
+  @Roles('ADMIN') // Only admin role allowed
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('/removeproductimage/:id')
   removeProductImage(@Param('id') id: string) {
     return this.managementService.removeProductImage(id);
