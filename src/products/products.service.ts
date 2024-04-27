@@ -84,15 +84,15 @@ export class ProductsService {
     return { product: product };
   }
 
-  async getSpecialOffers() {
+  async getWeeksSelection() {
     const products = await this.prismaService.products.findMany({
       where: {
-        special_offer: true,
+        weeksSelection: true,
       },
       orderBy: {
         createdAt: 'desc',
       },
-      take: 4,
+      take: 8,
       select: {
         createdAt: true,
         id: true,
@@ -106,7 +106,35 @@ export class ProductsService {
         quantity: true,
         category: true,
         description: true,
-        ProductImages: { take: 1 },
+        ProductImages: { take: 2 },
+      },
+    });
+
+    return { products: products };
+  }
+
+  async getSpecialOffers() {
+    const products = await this.prismaService.products.findMany({
+      where: {
+        special_offer: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 8,
+      select: {
+        createdAt: true,
+        id: true,
+        title: true,
+        price: true,
+        brand: true,
+        type: true,
+        cover: true,
+        design: true,
+        discount: true,
+        quantity: true,
+        category: true,
+        description: true,
       },
     });
 

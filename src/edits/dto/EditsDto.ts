@@ -24,4 +24,6 @@ export class EditDto {
   rarity: string;
 
   id: string;
+
+  trainer: string;
 }

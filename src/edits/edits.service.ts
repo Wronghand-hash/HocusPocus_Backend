@@ -32,4 +32,20 @@ export class EditsService {
 
     return { updatedProduct: product };
   }
+
+  async updateCourse(dto: EditDto) {
+    const course = await this.prismaService.courses.updateMany({
+      where: {
+        id: Number(dto.id),
+      },
+      data: {
+        title: dto.title,
+        description: dto.description,
+        price: String(dto.price),
+        trainer: dto.trainer,
+      },
+    });
+
+    return { updatedCourse: course };
+  }
 }

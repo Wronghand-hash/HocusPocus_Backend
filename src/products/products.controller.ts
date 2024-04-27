@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Body,
   Controller,
@@ -44,6 +45,11 @@ export class ProductsController {
   @Get('lastfour')
   getLastFour() {
     return this.productService.getFourBeforeOne();
+  }
+
+  @Get('weekselection')
+  getWeeksSelection() {
+    return this.productService.getWeeksSelection();
   }
 
   @Get('offers')

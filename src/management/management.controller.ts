@@ -247,6 +247,13 @@ export class ManagementController {
     return this.managementService.addVideo(file, body);
   }
 
+  @Roles('ADMIN')
+  @UseGuards(LocalAuthGuard, RolesGuard)
+  @Post('/updatecourse')
+  updateCourse() {
+    return { msg: 'here we will update some things' };
+  }
+
   // @Roles('ADMIN') // Only admin role allowed
   // @UseGuards(AuthenticatedGuard, RolesGuard)
   @Post('courseimageupload')
