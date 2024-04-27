@@ -4,4 +4,6 @@ export class DiscountDto {
   perc: string;
 
   code: string;
+
+  days: string;
 }

@@ -394,6 +394,7 @@ export class ManagementService {
       data: {
         code: dto.code,
         perc: dto.perc,
+        days: dto.days,
       },
     });
   }
@@ -407,6 +408,7 @@ export class ManagementService {
       select: {
         valid: true,
         perc: true,
+        days: true,
       },
     });
     if (discount) {
