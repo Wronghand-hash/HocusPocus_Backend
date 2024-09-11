@@ -13,7 +13,7 @@ datasource db {
 model User {
   id            Int             @id @default(autoincrement())
   createdAt     DateTime        @default(now())
-  email         String
+  email         String          @unique
   username      String          @unique
   password      String?
   address       String?
@@ -27,6 +27,13 @@ model User {
   comments      Comments[]
   VideoComments VideoComments[]
   Membership    Membership[]
+}
+
+model ForgottenPassword {
+  id    Int      @id @default(autoincrement())
+  email String?  @unique
+  token String?
+  date  DateTime @default(now())
 }
 
 enum UserTypes {
@@ -201,6 +208,13 @@ model Discounts {
   days       String?
   perc       String
   code       String   @unique
+}
+
+model shippmentCost {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  cost       String   @default("40000")
 }
 
 model PaymentRecords {

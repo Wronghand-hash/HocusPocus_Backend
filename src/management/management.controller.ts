@@ -341,4 +341,16 @@ export class ManagementController {
   validateCode(@Body() dto: DiscountDto) {
     return this.managementService.validateDiscount(dto);
   }
+
+  // shippment cost
+
+  @Post('updateshippmentcost')
+  async updateShippment(@Body('cost') cost: string) {
+    return await this.managementService.updateShippment(cost);
+  }
+
+  @Get('getShippmentCost')
+  async getShippmentCost() {
+    return await this.managementService.getShippmentCost();
+  }
 }
